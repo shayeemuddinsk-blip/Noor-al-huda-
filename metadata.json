@@ -1,0 +1,6 @@
+{
+  "name": "Noor Al Huda Islamic Shop",
+  "description": "Premium Islamic e-commerce platform with customer storefront, admin dashboard, WhatsApp order confirmation, multi-language support (English, Bengali, Hindi, Urdu), and Google Sheets/Drive integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,137 @@
+{
+  "entities": {
+    "user": {
+      "title": "User Profile",
+      "description": "User profile with role-based access information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "phone": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "owner", "super_admin", "product_manager", "order_manager"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "product": {
+      "title": "Product",
+      "description": "Islamic Shop inventory product item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "price": { "type": "number" },
+        "comparePrice": { "type": "number" },
+        "shortDescription": { "type": "string" },
+        "fullDescription": { "type": "string" },
+        "stock": { "type": "number" },
+        "images": { "type": "array" },
+        "ratings": { "type": "number" },
+        "isFeatured": { "type": "boolean" },
+        "inStock": { "type": "boolean" },
+        "brand": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "categoryId", "price", "stock"]
+    },
+    "category": {
+      "title": "Category",
+      "description": "Product category taxonomy",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "required": ["id", "name", "slug"]
+    },
+    "order": {
+      "title": "Order",
+      "description": "Customer purchase order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "shippingAddress": { "type": "object" },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "deliveryCharge": { "type": "number" },
+        "discountAmount": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "paymentStatus": { "type": "string" },
+        "orderStatus": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "customerName", "customerPhone", "totalAmount", "orderStatus"]
+    },
+    "storeSetting": {
+      "title": "Store Setting",
+      "description": "Store configuration and contact information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "storeName": { "type": "string" },
+        "ownerEmail": { "type": "string" },
+        "ownerPhone": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "deliveryFee": { "type": "number" },
+        "codEnabled": { "type": "boolean" }
+      },
+      "required": ["id", "storeName", "ownerEmail", "whatsappNumber"]
+    },
+    "review": {
+      "title": "Review",
+      "description": "Product review and rating",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "productId", "userId", "rating", "comment"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "Private customer and admin profile documents"
+    },
+    "/products/{productId}": {
+      "schema": "product",
+      "description": "Public catalog products"
+    },
+    "/categories/{categoryId}": {
+      "schema": "category",
+      "description": "Public catalog categories"
+    },
+    "/orders/{orderId}": {
+      "schema": "order",
+      "description": "Customer orders accessed by owner/admin or the ordering customer"
+    },
+    "/storeSettings/{settingId}": {
+      "schema": "storeSetting",
+      "description": "Global store settings readable publicly, writable by admin"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "review",
+      "description": "Public product reviews, author or admin writable"
+    },
+    "/admins/{userId}": {
+      "schema": "user",
+      "description": "Admin identity documents for secure RBAC verification"
+    }
+  }
+}
